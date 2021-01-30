@@ -26,7 +26,7 @@ const HeaderLinks = styled.ul`
     }
 `;
 
-const Header = () => {
+export const Header = () => {
     return (
         <HeaderBlock>
             <HeaderTitle>
@@ -48,5 +48,3 @@ const Header = () => {
         </HeaderBlock>
     );
 };
-
-export default Header;
