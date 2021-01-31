@@ -5,7 +5,6 @@ import {ErrorMessage} from '../errorMessage/errorMessage';
 import GotService from '../../services/gotService';
 import {RowBlock} from '../rowBlock/rowBlock';
 
-
 export default class CharacterPage extends Component {
 
     gotService = new GotService();
