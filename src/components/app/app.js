@@ -6,6 +6,8 @@ import {ErrorMessage} from '../errorMessage/errorMessage';
 import CharacterPage from '../characterPage/characterPage';
 
 import './app.css';
+import ItemList from '../itemList/itemList';
+import CharDetails from '../charDetails/charDetails';
 
 
 export default class App extends Component {
@@ -51,6 +53,22 @@ export default class App extends Component {
                         </Col>
                     </Row>
                     <CharacterPage/>
+                    {/* <Row>
+                        <Col md='6'>
+                            <ItemList onCharSelected={this.onCharSelected} />
+                        </Col>
+                        <Col md='6'>
+                            <CharDetails onCharSelected={this.state.selectedChar} />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md='6'>
+                            <ItemList onCharSelected={this.onCharSelected} />
+                        </Col>
+                        <Col md='6'>
+                            <CharDetails onCharSelected={this.state.selectedChar} />
+                        </Col>
+                    </Row> */}
                 </Container>
             </>
         );
