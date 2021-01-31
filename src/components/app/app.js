@@ -4,6 +4,7 @@ import {Header} from '../header/header';
 import RandomChar from '../randomChar/randomChar';
 import {ErrorMessage} from '../errorMessage/errorMessage';
 import CharacterPage from '../characterPage/characterPage';
+import GotService from '../../services/gotService';
 
 import './app.css';
 import ItemList from '../itemList/itemList';
@@ -11,6 +12,9 @@ import CharDetails from '../charDetails/charDetails';
 
 
 export default class App extends Component {
+
+    gotService = new GotService();
+
     state = {
         showRandomChar: true,
         selectedChar: null,
@@ -53,22 +57,20 @@ export default class App extends Component {
                         </Col>
                     </Row>
                     <CharacterPage/>
-                    {/* <Row>
-                        <Col md='6'>
-                            <ItemList onCharSelected={this.onCharSelected} />
-                        </Col>
-                        <Col md='6'>
-                            <CharDetails onCharSelected={this.state.selectedChar} />
-                        </Col>
-                    </Row>
                     <Row>
                         <Col md='6'>
-                            <ItemList onCharSelected={this.onCharSelected} />
+                            <ItemList 
+                            onCharSelected={this.onCharSelected}
+                            getData={this.gotService.getAllBooks}
+                            renderItem={(item) => item.name} />
                         </Col>
                         <Col md='6'>
-                            <CharDetails onCharSelected={this.state.selectedChar} />
+                            <CharDetails 
+                            onCharSelected={this.state.selectedChar}
+                            getData={this.gotService.getAllHouses}
+                            renderItem={(item) => item.name} />
                         </Col>
-                    </Row> */}
+                    </Row>
                 </Container>
             </>
         );
