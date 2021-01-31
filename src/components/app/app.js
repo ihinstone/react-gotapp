@@ -60,13 +60,13 @@ export default class App extends Component {
                     <Row>
                         <Col md='6'>
                             <ItemList 
-                            onItemSelected={this.onItemSelected}
+                            onCharSelected={this.onCharSelected}
                             getData={this.gotService.getAllBooks}
                             renderItem={(item) => item.name} />
                         </Col>
                         <Col md='6'>
                             <CharDetails 
-                            onItemSelected={this.state.selectedChar}
+                            onCharSelected={this.state.selectedChar}
                             getData={this.gotService.getAllHouses}
                             renderItem={(item) => item.name} />
                         </Col>

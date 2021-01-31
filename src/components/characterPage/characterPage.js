@@ -1,6 +1,6 @@
 import {Component} from 'react';
 import ItemList from '../itemList/itemList';
-import CharDetails, {Field} from '../charDetails/charDetails';
+import CharDetails from '../charDetails/charDetails';
 import {ErrorMessage} from '../errorMessage/errorMessage';
 import GotService from '../../services/gotService';
 import {RowBlock} from '../rowBlock/rowBlock';
@@ -21,7 +21,7 @@ export default class CharacterPage extends Component {
         })
     }
 
-    onItemSelected = (id) => {
+    onCharSelected = (id) => {
         this.setState({
             selectedChar: id
         })
@@ -34,16 +34,13 @@ export default class CharacterPage extends Component {
         }
         const itemList = (
             <ItemList 
-                onItemSelected={this.onItemSelected}
-                getData={this.gotService.getAllCharacters}
-                renderItem={({name, gender}) => `${name} (${gender})`} />
+            onCharSelected={this.onCharSelected}
+            getData={this.gotService.getAllCharacters}
+            renderItem={({name, gender}) => `${name} (${gender})`} />
         )
 
         const charDetails = (
-            <CharDetails charId={this.state.selectedChar} >
-                <Field field='gender' label='Gender' />
-                <Field field='born' label='Born' />
-            </CharDetails>
+            <CharDetails charId={this.state.selectedChar} />
         )
 
         return (
