@@ -12,7 +12,7 @@ import './app.css';
 export default class App extends Component {
     state = {
         showRandomChar: true,
-        error: false
+        selectedChar: null
     }
     toggleRandomChar = () => {
         this.setState((state) => {
@@ -21,6 +21,13 @@ export default class App extends Component {
             }
         });
     }
+
+    onCharSelected = (id) => {
+        this.setState({
+            selectedChar: id
+        })
+    }
+
     render() {
         if (this.state.error) {
             return <ErrorMessage/>
@@ -42,10 +49,10 @@ export default class App extends Component {
                     </Row>
                     <Row>
                         <Col md='6'>
-                            <ItemList />
+                            <ItemList onCharSelected={this.onCharSelected} />
                         </Col>
                         <Col md='6'>
-                            <CharDetails />
+                            <CharDetails charId={this.state.selectedChar} />
                         </Col>
                     </Row>
                 </Container>

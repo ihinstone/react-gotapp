@@ -1,5 +1,3 @@
-import styled from "styled-components";
-
 export default class GotService {
     constructor() {
         this._apiBase = 'https://www.anapioficeandfire.com/api';
@@ -49,11 +47,18 @@ export default class GotService {
         if (data) {
             return data
         } else {
-            return 'no data ;c'
+            return 'no data ;('
         }
+    }    
+    
+    _extractId = (item) => {
+        const idRegExp = /\/([0-9]*)$/;
+        return item.url.match(idRegExp)[1];
     }
-    _transformCharacter(char) {
+
+    _transformCharacter = (char) => {
         return {
+            id: this._extractId(char),
             name: this.isSet(char.name),
             gender: this.isSet(char.gender),
             born: this.isSet(char.born),
@@ -62,23 +67,24 @@ export default class GotService {
         };
     }
 
-    _transformHouse(house) {
+    _transformHouse = (house) => {
         return {
-            name: house.name,
-            region: house.region,
-            words: house.words,
-            titles: house.titles,
-            overlord: house.overlord,
-            ancestralWeapons: house.ancestralWeapons
+            id: this._extractId(house),
+            name: this.isSet(house.name),
+            region: this.isSet(house.region),
+            words: this.isSet(house.words),
+            titles: this.isSet(house.titles),
+            ancestralWeapons: this.isSet(house.ancestralWeapons)
         };
     }
     
-    _transformBook(book) {
+    _transformBook = (book) => {
         return {
-            name: book.name,
-            numberOfPages: book.numberOfPages,
-            publiser: book.publiser,
-            released: book.released
+            id: this._extractId(book),
+            name: this.isSet(book.name),
+            numberOfPages: this.isSet(book.numberOfPages),
+            publisher: this.isSet(book.publisher),
+            released: this.isSet(book.released)
         };
     }
 }
