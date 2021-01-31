@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import {Component} from 'react';
 import './randomChar.css';
 import gotService from '../../services/gotService';
 import {Spinner} from '../spinner/spinner';
