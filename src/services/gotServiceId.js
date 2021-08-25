@@ -3,7 +3,7 @@ const gotServiceId = async ({ url, id }) => {
     const gotData = await fetch(`${url}/${id}`);
     return await gotData.json();
   } catch (error) {
-    throw console.error(error);
+    console.error(error);
   }
 };
 

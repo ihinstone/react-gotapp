@@ -8543,6 +8543,11 @@
     "prop-types" "^15.6.2"
     "react-lifecycles-compat" "^3.0.4"
 
+"react-uuid@^1.0.2":
+  "integrity" "sha512-5e0GM16uuQj9MdRJlZ0GdLC8LKMwpU9PIqYmF27s3fIV2z+rLyASTaiW4aKzSY4DyGanz+ImzsECkftwGWfAwA=="
+  "resolved" "https://registry.npmjs.org/react-uuid/-/react-uuid-1.0.2.tgz"
+  "version" "1.0.2"
+
 "react@^16.13.0":
   "integrity" "sha512-TSavZz2iSLkq5/oiE7gnFzmURKZMltmi193rm5HEoUDAXpzT9Kzw6oNZnGoai/4+fUnm7FqS5dwgUL34TujcWQ=="
   "resolved" "https://registry.npmjs.org/react/-/react-16.13.0.tgz"

@@ -1,7 +1,6 @@
 import React from "react";
 
-const ErrorMessage = (props) => {
-  const { name } = props;
+const ErrorMessage = ({ name }) => {
   return (
     <>
       <span>Error: {name}</span>
