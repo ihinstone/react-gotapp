@@ -17,10 +17,10 @@ export default class RandomChar extends Component {
 
   state = {
     char: [
-      { title: "Gender", value: null },
-      { title: "Born", value: null },
-      { title: "Died", value: null },
-      { title: "Culture", value: null },
+      { title: "Gender", value: "" },
+      { title: "Born", value: "" },
+      { title: "Died", value: "" },
+      { title: "Culture", value: "" },
     ],
     charName: null,
     loading: true,
@@ -52,28 +52,23 @@ export default class RandomChar extends Component {
       });
   }
 
-  checkContent(content) {
-    const { loading, error } = this.state;
-
-    return loading ? (
-      <Spiner />
-    ) : error ? (
-      <ErrorMessage name={"Fetch"} />
-    ) : (
-      content
-    );
+  showSpiner() {
+    return <Spiner />;
   }
 
-  render() {
+  showError() {
+    return <ErrorMessage name={"Fetch"} />;
+  }
+
+  showContent() {
     const { char, charName } = this.state;
 
-    const content = (
+    return (
       <>
         <h4>Random Character: {charName}</h4>
         <ul className="list-group list-group-flush">
-          {char.map((param) => {
-            const { title, value } = param;
-            return value !== "" ? (
+          {char.map(({ title, value }) => {
+            return value ? (
               <li
                 key={uuid()}
                 className="list-group-item d-flex justify-content-between"
@@ -94,9 +89,21 @@ export default class RandomChar extends Component {
         </ul>
       </>
     );
+  }
 
-    return (
-      <div className="random-block rounded">{this.checkContent(content)}</div>
-    );
+  checkContent() {
+    const { loading, error } = this.state;
+
+    if (loading) {
+      return this.showSpiner();
+    } else if (error) {
+      return this.showError();
+    } else {
+      return this.showContent();
+    }
+  }
+
+  render() {
+    return <div className="random-block rounded">{this.checkContent()}</div>;
   }
 }

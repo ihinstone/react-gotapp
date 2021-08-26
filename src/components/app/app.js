@@ -17,14 +17,14 @@ export default class App extends Component {
     hide: true,
   };
 
-  onHide() {
+  onHide = () => {
     const { name, hide } = this.state;
     const newName = name === "hide" ? "show" : "hide";
     this.setState({
       name: newName,
       hide: !hide,
     });
-  }
+  };
 
   render() {
     const { name, hide } = this.state;
