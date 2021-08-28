@@ -6,28 +6,35 @@ import ItemList from "../itemList";
 import CharDetails from "../charDetails";
 
 export default class App extends Component {
-  constructor() {
-    super();
-
-    this.onHide = this.onHide.bind(this);
-  }
-
   state = {
-    name: "hide",
-    hide: true,
+    btn: { name: "hide", hide: true },
+    itemId: null,
   };
 
   onHide = () => {
-    const { name, hide } = this.state;
+    const {
+      btn: { name, hide },
+    } = this.state;
     const newName = name === "hide" ? "show" : "hide";
     this.setState({
-      name: newName,
-      hide: !hide,
+      btn: {
+        name: newName,
+        hide: !hide,
+      },
+    });
+  };
+
+  setItemId = (id) => {
+    this.setState({
+      itemId: id,
     });
   };
 
   render() {
-    const { name, hide } = this.state;
+    const {
+      btn: { name, hide },
+      itemId,
+    } = this.state;
 
     return (
       <>
@@ -47,10 +54,10 @@ export default class App extends Component {
           </Row>
           <Row>
             <Col md="6">
-              <ItemList />
+              <ItemList setItemId={this.setItemId} />
             </Col>
             <Col md="6">
-              <CharDetails />
+              <CharDetails id={itemId} />
             </Col>
           </Row>
         </Container>

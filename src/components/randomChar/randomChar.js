@@ -3,18 +3,12 @@ import "./randomChar.css";
 import uuid from "react-uuid";
 
 import gotServiceId from "../../services/gotServiceId";
+import getComponent from "../../utils/getComponent";
 
 import Spiner from "../spiner";
 import ErrorMessage from "../errorMessage/errorMessage";
 
 export default class RandomChar extends Component {
-  constructor() {
-    super();
-
-    this.setChar();
-    this.checkContent = this.checkContent.bind(this);
-  }
-
   state = {
     char: [
       { title: "Gender", value: "" },
@@ -27,7 +21,7 @@ export default class RandomChar extends Component {
     error: false,
   };
 
-  setChar() {
+  setChar = () => {
     gotServiceId({
       url: "https://www.anapioficeandfire.com/api/characters",
       id: Math.floor(Math.random() * 140 + 1),
@@ -50,17 +44,9 @@ export default class RandomChar extends Component {
           error: true,
         });
       });
-  }
+  };
 
-  showSpiner() {
-    return <Spiner />;
-  }
-
-  showError() {
-    return <ErrorMessage name={"Fetch"} />;
-  }
-
-  showContent() {
+  showContent = () => {
     const { char, charName } = this.state;
 
     return (
@@ -89,18 +75,22 @@ export default class RandomChar extends Component {
         </ul>
       </>
     );
-  }
+  };
 
-  checkContent() {
+  checkContent = () => {
     const { loading, error } = this.state;
 
     if (loading) {
-      return this.showSpiner();
+      return getComponent(<Spiner />);
     } else if (error) {
-      return this.showError();
+      return getComponent(<ErrorMessage name={"Fetch"} />);
     } else {
       return this.showContent();
     }
+  };
+
+  componentDidMount() {
+    this.setChar();
   }
 
   render() {
