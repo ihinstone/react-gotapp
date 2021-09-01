@@ -12,16 +12,12 @@ export default class App extends Component {
   };
 
   onHide = () => {
-    const {
-      btn: { name, hide },
-    } = this.state;
-    const newName = name === "hide" ? "show" : "hide";
-    this.setState({
+    this.setState(({ btn: { name, hide } }) => ({
       btn: {
-        name: newName,
+        name: name === "hide" ? "show" : "hide",
         hide: !hide,
       },
-    });
+    }));
   };
 
   setItemId = (id) => {

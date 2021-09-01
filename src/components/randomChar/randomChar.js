@@ -34,7 +34,7 @@ export default class RandomChar extends Component {
             { title: "Died", value: died },
             { title: "Culture", value: culture },
           ],
-          charName: name,
+          charName: name,   
           loading: false,
         });
       })
