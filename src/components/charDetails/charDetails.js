@@ -21,33 +21,33 @@ export default class CharDetails extends Component {
     error: false,
   };
 
+  // const {id} = this.props;
+
   setChar = () => {
     const { id } = this.props;
 
-    if (!id) {
-      return;
-    }
-
-    gotServiceId({
-      url: characters,
-      id: id,
-    })
-      .then(({ name, gender, born, died, culture }) => {
-        this.setState({
-          charName: name,
-          charDitails: [
-            { name: "Gander", value: gender },
-            { name: "Born", value: born },
-            { name: "Died", value: died },
-            { name: "Culture", value: culture },
-          ],
-        });
-      })
-      .catch(() => {
-        this.setState({
-          error: true,
-        });
-      });
+    return !id
+      ? null
+      : gotServiceId({ url: characters, id: id })
+          .then((data) => {
+            console.log(data);
+          })
+          .then(({ name, gender, born, died, culture }) => {
+            this.setState({
+              charName: name,
+              charDitails: [
+                { name: "Gander", value: gender },
+                { name: "Born", value: born },
+                { name: "Died", value: died },
+                { name: "Culture", value: culture },
+              ],
+            });
+          })
+          .catch(() => {
+            this.setState({
+              error: true,
+            });
+          });
   };
 
   setContent = () => {

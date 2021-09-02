@@ -3,6 +3,7 @@ import "./itemList.css";
 
 import gotServicePage from "../../services/gotServicePage";
 import getComponent from "../../utils/getComponent";
+import { getApiId } from "../../utils/getApiId";
 
 import Spiner from "../spiner";
 import ErrorMessage from "../errorMessage/errorMessage";
@@ -22,10 +23,11 @@ export default class ItemList extends Component {
       page: 4,
     })
       .then((items) => {
-        let nameList = [];
-        items.forEach(({ name }, i) => {
-          nameList.push({ name, id: 31 + i });
+        const nameList = [];
+        items.map(({ name, url }) => {
+          return nameList.push({ name, id: getApiId(url) });
         });
+        console.log(nameList);
         this.setState({
           itemList: nameList,
           loading: false,
@@ -39,9 +41,9 @@ export default class ItemList extends Component {
       });
   };
 
-  pushId = (e) => {
+  pushId = (id) => {
     const { setItemId } = this.props;
-    setItemId(e.target.id);
+    setItemId(id);
   };
 
   setContent = () => {
@@ -52,7 +54,7 @@ export default class ItemList extends Component {
         {itemList.map(({ name, id }) => {
           return (
             <li
-              onClick={this.pushId}
+              onClick={() => this.pushId(id)}
               key={id}
               id={id}
               className="list-group-item"
