@@ -17,6 +17,10 @@ export default class ItemList extends Component {
     error: false,
   };
 
+  componentDidMount() {
+    this.setData();
+  }
+
   setData = (page) => {
     return gotServicePage({
       url: characters,
@@ -27,7 +31,6 @@ export default class ItemList extends Component {
         items.map(({ name, url }) => {
           return nameList.push({ name, id: getApiId(url) });
         });
-        console.log(nameList);
         this.setState({
           itemList: nameList,
           loading: false,
@@ -78,10 +81,6 @@ export default class ItemList extends Component {
       return this.setContent();
     }
   };
-
-  componentDidMount() {
-    this.setData();
-  }
 
   render() {
     return <div className="random-block rounded">{this.checkContent()}</div>;

@@ -4,6 +4,7 @@ import uuid from "react-uuid";
 
 import gotServiceId from "../../services/gotServiceId";
 import getComponent from "../../utils/getComponent";
+import { checkData } from "../../utils/checkData";
 
 import ErrorMessage from "../errorMessage/errorMessage";
 
@@ -21,7 +22,15 @@ export default class CharDetails extends Component {
     error: false,
   };
 
-  // const {id} = this.props;
+  componentDidMount() {
+    this.setChar();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.id !== prevProps.id) {
+      this.setChar();
+    }
+  }
 
   setChar = () => {
     const { id } = this.props;
@@ -29,17 +38,14 @@ export default class CharDetails extends Component {
     return !id
       ? null
       : gotServiceId({ url: characters, id: id })
-          .then((data) => {
-            console.log(data);
-          })
           .then(({ name, gender, born, died, culture }) => {
             this.setState({
               charName: name,
               charDitails: [
-                { name: "Gander", value: gender },
-                { name: "Born", value: born },
-                { name: "Died", value: died },
-                { name: "Culture", value: culture },
+                { name: "Gander", value: checkData(gender) },
+                { name: "Born", value: checkData(born) },
+                { name: "Died", value: checkData(died) },
+                { name: "Culture", value: checkData(culture) },
               ],
             });
           })
@@ -85,16 +91,6 @@ export default class CharDetails extends Component {
       return this.setContent();
     }
   };
-
-  componentDidMount() {
-    this.setChar();
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.id !== prevProps.id) {
-      this.setChar();
-    }
-  }
 
   render() {
     return <div className="char-details rounded">{this.checkContent()}</div>;

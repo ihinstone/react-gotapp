@@ -4,6 +4,7 @@ import uuid from "react-uuid";
 
 import gotServiceId from "../../services/gotServiceId";
 import getComponent from "../../utils/getComponent";
+import { checkData } from "../../utils/checkData";
 
 import Spiner from "../spiner";
 import ErrorMessage from "../errorMessage/errorMessage";
@@ -21,6 +22,10 @@ export default class RandomChar extends Component {
     error: false,
   };
 
+  componentDidMount() {
+    this.setChar();
+  }
+
   setChar = () => {
     gotServiceId({
       url: "https://www.anapioficeandfire.com/api/characters",
@@ -29,12 +34,12 @@ export default class RandomChar extends Component {
       .then(({ name, gender, born, died, culture }) => {
         this.setState({
           char: [
-            { title: "Gender", value: gender },
-            { title: "Born", value: born },
-            { title: "Died", value: died },
-            { title: "Culture", value: culture },
+            { title: "Gender", value: checkData(gender) },
+            { title: "Born", value: checkData(born) },
+            { title: "Died", value: checkData(died) },
+            { title: "Culture", value: checkData(culture) },
           ],
-          charName: name,   
+          charName: name,
           loading: false,
         });
       })
@@ -54,21 +59,13 @@ export default class RandomChar extends Component {
         <h4>Random Character: {charName}</h4>
         <ul className="list-group list-group-flush">
           {char.map(({ title, value }) => {
-            return value ? (
+            return (
               <li
                 key={uuid()}
                 className="list-group-item d-flex justify-content-between"
               >
                 <span className="term">{title} </span>
                 <span>{value}</span>
-              </li>
-            ) : (
-              <li
-                key={uuid()}
-                className="list-group-item d-flex justify-content-between"
-              >
-                <span className="term">{title} </span>
-                <span>No data</span>
               </li>
             );
           })}
@@ -88,10 +85,6 @@ export default class RandomChar extends Component {
       return this.showContent();
     }
   };
-
-  componentDidMount() {
-    this.setChar();
-  }
 
   render() {
     return <div className="random-block rounded">{this.checkContent()}</div>;
