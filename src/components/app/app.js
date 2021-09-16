@@ -5,6 +5,8 @@ import RandomChar from "../randomChar";
 import ItemList from "../itemList";
 import CharDetails from "../charDetails";
 
+import { characters } from "../../constants/constants";
+
 export default class App extends Component {
   state = {
     btn: { name: "hide", hide: true },
@@ -50,7 +52,7 @@ export default class App extends Component {
           </Row>
           <Row>
             <Col md="6">
-              <ItemList setItemId={this.setItemId} />
+              <ItemList dataSettings={{url: characters, page: 4}} setItemId={this.setItemId} />
             </Col>
             <Col md="6">
               <CharDetails id={itemId} />

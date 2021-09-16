@@ -1,58 +1,44 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import "./itemList.css";
 
 import gotServicePage from "../../services/gotServicePage";
-import getComponent from "../../utils/getComponent";
 
 import Spiner from "../spiner";
 import ErrorMessage from "../errorMessage/errorMessage";
 
-import { characters } from "../../constants/constants";
+export const ItemList = ({dataSettings, setItemId}) => {
 
-export default class ItemList extends Component {
-  state = {
-    itemList: [{ name: "", id: "" }],
-    loading: true,
-    error: false,
-  };
+  const [itemList, setItemList] = useState([{ name: "", id: "" }]);
+  const [loading, setLoading] = useState(true);
+  const[error, setError] = useState(false);
 
-  setData = (page) => {
-    return gotServicePage({
-      url: characters,
-      page: 4,
+  useEffect(() => {
+    gotServicePage(dataSettings).then((items) => {
+     const nameList =[];
+     items.map(({name}) => {
+       return nameList.push({name})
+     })
+     setItemList(nameList);
+     setLoading(false);
+    }).catch(() => {
+      setLoading(false);
+      setError(!error);
     })
-      .then((items) => {
-        let nameList = [];
-        items.forEach(({ name }, i) => {
-          nameList.push({ name, id: 31 + i });
-        });
-        this.setState({
-          itemList: nameList,
-          loading: false,
-        });
-      })
-      .catch(() => {
-        this.setState({
-          loading: false,
-          error: true,
-        });
-      });
-  };
+    console.log(itemList, loading, error);
+  })
 
-  pushId = (e) => {
-    const { setItemId } = this.props;
+  const pushId = (e) => {
     setItemId(e.target.id);
   };
 
-  setContent = () => {
-    const { itemList } = this.state;
+  const setContent = () => {
 
     return (
       <ul className="item-list list-group">
         {itemList.map(({ name, id }) => {
           return (
             <li
-              onClick={this.pushId}
+              onClick={pushId}
               key={id}
               id={id}
               className="list-group-item"
@@ -65,23 +51,17 @@ export default class ItemList extends Component {
     );
   };
 
-  checkContent = () => {
-    const { loading, error } = this.state;
-
+  const checkContent = () => {
     if (loading) {
-      return getComponent(<Spiner />);
+      return <Spiner />;
     } else if (error) {
-      return getComponent(<ErrorMessage name={"Characters not found"} />);
+      return <ErrorMessage name={"Not found"} />;
     } else {
-      return this.setContent();
+      return setContent();
     }
   };
 
-  componentDidMount() {
-    this.setData();
-  }
-
-  render() {
-    return <div className="random-block rounded">{this.checkContent()}</div>;
-  }
+  
+  return <div className="random-block rounded">{checkContent()}</div>;
+  
 }

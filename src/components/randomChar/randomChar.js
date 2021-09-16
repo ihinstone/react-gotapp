@@ -3,7 +3,6 @@ import "./randomChar.css";
 import uuid from "react-uuid";
 
 import gotServiceId from "../../services/gotServiceId";
-import getComponent from "../../utils/getComponent";
 
 import Spiner from "../spiner";
 import ErrorMessage from "../errorMessage/errorMessage";
@@ -81,9 +80,9 @@ export default class RandomChar extends Component {
     const { loading, error } = this.state;
 
     if (loading) {
-      return getComponent(<Spiner />);
+      return <Spiner />;
     } else if (error) {
-      return getComponent(<ErrorMessage name={"Fetch"} />);
+      return <ErrorMessage name={"Fetch"} />;
     } else {
       return this.showContent();
     }

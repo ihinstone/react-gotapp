@@ -3,7 +3,6 @@ import "./charDetails.css";
 import uuid from "react-uuid";
 
 import gotServiceId from "../../services/gotServiceId";
-import getComponent from "../../utils/getComponent";
 
 import ErrorMessage from "../errorMessage/errorMessage";
 
@@ -80,7 +79,7 @@ export default class CharDetails extends Component {
     if (!id) {
       return <span>Select character</span>;
     } else if (error) {
-      return getComponent(<ErrorMessage name={"Not found"} />);
+      return <ErrorMessage name={"Not found"} />;
     } else {
       return this.setContent();
     }
