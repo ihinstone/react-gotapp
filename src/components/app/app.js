@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { Col, Row, Container } from "reactstrap";
 import Header from "../header";
-import RandomChar from "../randomChar";
+import RandomItem from "../randomItem";
 import ItemList from "../itemList";
-import CharDetails from "../charDetails";
+import ItemDetails from "../itemDetails";
+
+import { characters } from "../../constants/constants";
 
 export default class App extends Component {
   state = {
@@ -45,7 +47,7 @@ export default class App extends Component {
         <Container>
           <Row>
             <Col lg={{ size: 5, offset: 0 }}>
-              {hide ? <RandomChar /> : null}
+              {hide ? <RandomItem setReq={{url: characters, id: Math.floor(Math.random() * 140 + 1)}} options={['gender', 'born', 'died', 'culture']} /> : null}
             </Col>
           </Row>
           <Row>
@@ -55,10 +57,10 @@ export default class App extends Component {
           </Row>
           <Row>
             <Col md="6">
-              <ItemList setItemId={this.setItemId} />
+              <ItemList setReq={{url: characters, page: 4}} type={'Characters'} setItemId={this.setItemId} />
             </Col>
             <Col md="6">
-              <CharDetails id={itemId} />
+              <ItemDetails setReq={{url: characters, id: itemId}} options={['gender', 'born', 'died', 'culture']}/>
             </Col>
           </Row>
         </Container>
