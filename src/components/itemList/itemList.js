@@ -7,7 +7,7 @@ import { getApiId } from "../../utils/getApiId";
 import Spiner from "../spiner";
 import ErrorMessage from "../errorMessage/errorMessage";
 
-export const ItemList = ({ setReq, type, setItemId }) => {
+export const ItemList = ({ setReq, type, getItemId }) => {
   const [itemList, setItemList] = useState([{ name: "", id: "" }]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -30,7 +30,7 @@ export const ItemList = ({ setReq, type, setItemId }) => {
   }, []);
 
   const pushId = (id) => {
-    setItemId(id);
+    getItemId(id);
   };
 
   const setContent = () => {
