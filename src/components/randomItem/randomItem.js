@@ -4,37 +4,44 @@ import uuid from "react-uuid";
 
 import gotServiceId from "../../services/gotServiceId";
 
+import { ifDataIsEmpty } from "../../utils/ifDataIsEmpty";
+
 import Spiner from "../spiner";
 import ErrorMessage from "../errorMessage/errorMessage";
 
-export const RandomItem = ({setReq, options}) => {
-
-  const [itemName, setItemName] = useState('');
+export const RandomItem = ({ setReq, options, type }) => {
+  const [itemName, setItemName] = useState("");
   const [item, setItem] = useState([{ title: "", value: "" }]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  
-  useEffect(() => {
-    gotServiceId(setReq).then((item) => {
-      const itemBody = [];
 
-      options.map((option) => {
-        return itemBody.push({title: option, value: !item[option] ? 'no data' : item[option]})
+  useEffect(() => {
+    gotServiceId(setReq)
+      .then((item) => {
+        const itemBody = [];
+
+        options.map((option) => {
+          return itemBody.push({
+            title: option,
+            value: ifDataIsEmpty(item[option]),
+          });
+        });
+        setItemName(item.name);
+        setItem(itemBody);
+        setLoading(!loading);
       })
-      setItemName(item.name);
-      setItem(itemBody);
-      setLoading(!loading);
-    }).catch(() => {
-      setLoading(!loading);
-      setError(!error);
-    })
+      .catch(() => {
+        setLoading(!loading);
+        setError(!error);
+      });
   }, []);
 
   const showContent = () => {
-
     return (
       <>
-        <h4>Random Character: {itemName}</h4>
+        <h4>
+          Random {type}: {itemName}
+        </h4>
         <ul className="list-group list-group-flush">
           {item.map(({ title, value }) => {
             return (
@@ -53,7 +60,6 @@ export const RandomItem = ({setReq, options}) => {
   };
 
   const checkContent = () => {
-
     if (loading) {
       return <Spiner />;
     } else if (error) {
@@ -63,7 +69,5 @@ export const RandomItem = ({setReq, options}) => {
     }
   };
 
-  
-    return <div className="random-block rounded">{checkContent()}</div>;
-  
-}
+  return <div className="random-block rounded">{checkContent()}</div>;
+};

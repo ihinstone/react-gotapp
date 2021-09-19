@@ -4,29 +4,35 @@ import uuid from "react-uuid";
 
 import gotServiceId from "../../services/gotServiceId";
 
+import { ifDataIsEmpty } from "../../utils/ifDataIsEmpty";
+
 import ErrorMessage from "../errorMessage/errorMessage";
 
-export const ItemDetails = ({setReq, options}) => {
-
-  const [itemName, setItemName] = useState('');
-  const [itemDetails, setItemDetails] = useState([{ name: "", value: "" },]);
+export const ItemDetails = ({ setReq, options }) => {
+  const [itemName, setItemName] = useState("");
+  const [itemDetails, setItemDetails] = useState([{ name: "", value: "" }]);
   const [error, setError] = useState(false);
 
   useEffect(() => {
     if (setReq.id) {
-      gotServiceId(setReq).then((item) => {
-        const itemBody = [];
-  
-        options.map((option) => {
-          return itemBody.push({name: option, value: !item[option] ? 'no data' : item[option]})
+      gotServiceId(setReq)
+        .then((item) => {
+          const itemBody = [];
+
+          options.map((option) => {
+            return itemBody.push({
+              name: option,
+              value: ifDataIsEmpty(item[option]),
+            });
+          });
+          setItemName(item.name);
+          setItemDetails(itemBody);
         })
-        setItemName(item.name);
-        setItemDetails(itemBody);
-      }).catch(() => {
-        setError(!error);
-      })
+        .catch(() => {
+          setError(!error);
+        });
     }
-  }, [setReq.id])
+  }, [setReq.id]);
 
   const setContent = () => {
     return (
@@ -50,7 +56,6 @@ export const ItemDetails = ({setReq, options}) => {
   };
 
   const checkContent = () => {
-
     if (!setReq.id) {
       return <span>Select character</span>;
     } else if (error) {
@@ -60,6 +65,5 @@ export const ItemDetails = ({setReq, options}) => {
     }
   };
 
-  
-    return <div className="char-details rounded">{checkContent()}</div>;
-}
+  return <div className="char-details rounded">{checkContent()}</div>;
+};
